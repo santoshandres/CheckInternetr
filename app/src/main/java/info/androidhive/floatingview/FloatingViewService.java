@@ -30,9 +30,7 @@ public class FloatingViewService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         Bundle extras = intent.getExtras();
-
         if(extras == null) {
             Log.d("Service","null");
         } else {
@@ -43,10 +41,8 @@ public class FloatingViewService extends Service {
                 StartListenLocation(1);
             }else if(from.equalsIgnoreCase("2")) {
                 StartListenLocation(2);
-
             }
         }
-
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -93,17 +89,11 @@ public class FloatingViewService extends Service {
             //Add the view to the window
             mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
             mWindowManager.addView(mFloatingView, params);
-
         }
     }
     @Override
     public void onCreate() {
         super.onCreate();
-
-
-
-
-
     }
 
     @Override
