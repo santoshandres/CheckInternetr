@@ -29,34 +29,46 @@ public class MyService extends Service {
     private boolean isdataavailable() {
         MyMusicc m = new MyMusicc();
         m.execute();
-        return prefs.getBoolean("locked", false);
+        return prefsq.getBoolean("ck", false);
     }
-
 
     public class MyMusicc extends AsyncTask {
         @Override
         protected Object doInBackground(Object[] objects) {
             String  s1="nul";
+            MyApp myApp = new MyApp();
+            Log.d("sdfgh","dgdgdd");
+
             try {
-                MyApp myApp = new MyApp();
+                Log.d("qaxcv","ed1");
+
                 String reslt = myApp.getdetils("http://echo.jsontest.com/key/value/one/two");
-                JSONObject jsonObject  = new JSONObject(reslt);
-               s1=jsonObject.getString("one");
-            } catch (JSONException e) {
-                e.printStackTrace();
+                editor.putBoolean("ck",true).commit();
+                Log.d("qaxcv",reslt);
+            }catch (NullPointerException e){
+                Log.d("qaxcv","tr");
+                editor.putBoolean("ck",false).commit();
             }
+
+            //JSONObject jsonObject  = new JSONObject(reslt);
+            //s1=jsonObject.getString("one");
+            /*if (reslt.equals(null)){
+                editor.putBoolean("ck",false).commit();
+                Log.d("sdfgh",reslt+" tr");
+
+
+            }
+            else {
+                editor.putBoolean("ck",true).commit();
+                Log.d("sdfgh",reslt+" fls");
+
+            }*/
             return s1;
         }
 
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            //Log.i("djhgfg",j);
-            if (o.equals("two")) {
-                prefs.edit().putBoolean("locked", true).commit();
-            } else {
-                prefs.edit().putBoolean("locked", false).commit();
-            }
         }
     }
 
@@ -85,12 +97,6 @@ public class MyService extends Service {
     //            //Inflate the floating view layout we created
     //            //stopSelf();
     //            //mWindowManager.removeView(mFloatingView);
-
-
-
-
-
-
     public void checkConnection() {
         if (mFloatingView != null) {
             if (isdataavailable()) {
@@ -101,6 +107,7 @@ public class MyService extends Service {
         } else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
+        //content providers
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -132,7 +139,8 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        prefs = PreferenceManager.getDefaultSharedPreferences(MyService.this);
+        prefsq = getSharedPreferences("san",MODE_PRIVATE);
+        editor=prefsq.edit();
 
         mFloatingView = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget, null);
         imageView = (ImageView) mFloatingView.findViewById(R.id.collapsed_iv);
@@ -155,7 +163,6 @@ public class MyService extends Service {
         mWindowManager.addView(mFloatingView, params);  //The root element of the collapsed view layout
         final View collapsedView = mFloatingView.findViewById(R.id.collapse_view);
         //The root element of the expanded view layout
-
         //Set the close button
         ImageView closeButton = (ImageView) mFloatingView.findViewById(R.id.close_button);
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -219,24 +226,19 @@ public class MyService extends Service {
         });
     }
 
-
-
     final Handler handler = new Handler();
     private WindowManager mWindowManager;
     private View mFloatingView;
     WindowManager.LayoutParams params;
     ImageView imageView;
-   // String s1, s2;
-    SharedPreferences prefs;
+    SharedPreferences prefsq;
+    SharedPreferences.Editor editor;
 
     public MyService() {
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
-
-
 }
