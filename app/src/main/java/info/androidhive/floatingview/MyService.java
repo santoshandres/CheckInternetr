@@ -37,32 +37,16 @@ public class MyService extends Service {
         protected Object doInBackground(Object[] objects) {
             String  s1="nul";
             MyApp myApp = new MyApp();
-            Log.d("sdfgh","dgdgdd");
+                       Log.d("sdfgh","dgdgdd");
 
             try {
-                Log.d("qaxcv","ed1");
-
                 String reslt = myApp.getdetils("http://echo.jsontest.com/key/value/one/two");
                 editor.putBoolean("ck",true).commit();
                 Log.d("qaxcv",reslt);
             }catch (NullPointerException e){
-                Log.d("qaxcv","tr");
                 editor.putBoolean("ck",false).commit();
             }
 
-            //JSONObject jsonObject  = new JSONObject(reslt);
-            //s1=jsonObject.getString("one");
-            /*if (reslt.equals(null)){
-                editor.putBoolean("ck",false).commit();
-                Log.d("sdfgh",reslt+" tr");
-
-
-            }
-            else {
-                editor.putBoolean("ck",true).commit();
-                Log.d("sdfgh",reslt+" fls");
-
-            }*/
             return s1;
         }
 
@@ -72,31 +56,6 @@ public class MyService extends Service {
         }
     }
 
-//    private void initializeView(int y) {
-//        if (y==1){
-//                startService(new Intent(getApplicationContext(), FloatingViewService.class).putExtra("STATE",y));
-//        }else if(y==2) {
-//            startService(new Intent(getApplicationContext(), FloatingViewService.class).putExtra("STATE",y));
-//
-//        }
-//    }
-    //maybe you want to check it by getting the sharedpreferences. Use this instead if (locked)
-// if (prefs.getBoolean("locked", locked) {
-    // if (mFloatingView != null) mWindowManager.removeView(mFloatingView);
-//            mFloatingView = LayoutInflater.from(this).inflate(R.layout.layout_floating_widgettt, null);
-    //initializeView(2);
-    // Toast.makeText(MyService.this, "You are not connected to Internet", Toast.LENGTH_SHORT).show();
-    //mWindowManager.removeView(mFloatingView);
-    //mFloatingView = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget, null);
-    //Add the view to the window.
-    //stopSelf();
-    //mWindowManager.removeView(mFloatingView);
-    // startService(new Intent(vv, FloatingViewService.class));
-    //           // initializeView(1);
-    //            // Toast.makeText(MyService.this, "You are connected to Internet", Toast.LENGTH_SHORT).show();
-    //            //Inflate the floating view layout we created
-    //            //stopSelf();
-    //            //mWindowManager.removeView(mFloatingView);
     public void checkConnection() {
         if (mFloatingView != null) {
             if (isdataavailable()) {
@@ -107,7 +66,6 @@ public class MyService extends Service {
         } else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
-        //content providers
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -126,9 +84,8 @@ public class MyService extends Service {
     @Override
     public void onDestroy() {
         handler.removeCallbacksAndMessages(null);
-        //if (mFloatingView != null) mWindowManager.removeView(mFloatingView);
-        //if (mFloatingView1 != null) mWindowManager.removeView(mFloatingView1);
         Toast.makeText(this, "Service Stopped", Toast.LENGTH_SHORT).show();
+        if (mFloatingView != null) mWindowManager.removeView(mFloatingView);
         super.onDestroy();
     }
 
@@ -144,7 +101,7 @@ public class MyService extends Service {
 
         mFloatingView = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget, null);
         imageView = (ImageView) mFloatingView.findViewById(R.id.collapsed_iv);
-        imageView.setAlpha(50);
+        imageView.setAlpha(90);
         params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -160,10 +117,9 @@ public class MyService extends Service {
 
         //Add the view to the window
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        mWindowManager.addView(mFloatingView, params);  //The root element of the collapsed view layout
+        mWindowManager.addView(mFloatingView, params);
         final View collapsedView = mFloatingView.findViewById(R.id.collapse_view);
-        //The root element of the expanded view layout
-        //Set the close button
+
         ImageView closeButton = (ImageView) mFloatingView.findViewById(R.id.close_button);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override

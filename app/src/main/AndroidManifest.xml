@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name="info.androidhive.floatingview.IntroActivity"/>
         <service
             android:name=".MyService"
             android:enabled="true"
