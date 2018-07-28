@@ -20,7 +20,6 @@ public class IntroActivity extends AppIntro {
         addSlide(AppIntroFragment.newInstance("Close Button", "It just unvisible the floating widget not the service...So to close properly press the service button"
                 ,R.drawable.close, ContextCompat.getColor(getApplicationContext(),R.color.slide2)));
 
-
         addSlide(AppIntroFragment.newInstance("Stop Service Button", "It closes all the background service and stop the process."
                 ,R.drawable.stopservicee, ContextCompat.getColor(getApplicationContext(),R.color.slide3)));
 
@@ -38,4 +37,3 @@ public class IntroActivity extends AppIntro {
         finish();
     }
 }
-
