@@ -31,7 +31,7 @@ public class IntroActivity extends AppIntro {
         super.onDonePressed(currentFragment);
         finish();
     }
-
+    
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
